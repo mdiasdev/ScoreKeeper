@@ -15,7 +15,7 @@ jobs:
     name: Swiftlint
     runs-on: macos-latest
     steps:
-    - uses: action/checkout@master
+    - uses: actions/checkout@master
     
     - name: Install Swiftlint
       run: |
