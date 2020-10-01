@@ -8,17 +8,27 @@ jobs:
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@master
-    
     - name: Run Script
       run: echo Hello, Matt!
+  
   lint:
     name: Swiftlint
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@master
-    
     - name: Install Swiftlint
       run: |
         brew install swiftlint
         swiftlint autocorrect
         echo Linting done!
+
+  build:
+    name: Build
+    runs-on: macos-latest
+    needs: lint # don't run if lint step fails
+    steps:
+    - uses: actions/checkout@master
+    - name: Choose Xcode 12
+      run: sudo xcode-select --switch /Applications/Xcode_12.app
+    - name: Build App
+      run: xcodebuild -scheme "ScoreKeeper" -target ScoreKeeper -sdk iphonesimulator clean build
